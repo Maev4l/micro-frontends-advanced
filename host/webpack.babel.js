@@ -1,5 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import webpack from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';

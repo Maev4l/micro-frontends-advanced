@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { mount } from 'pluginCatalog/Catalog';
 import React, { useRef, useEffect } from 'react';
 
