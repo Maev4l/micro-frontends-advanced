@@ -1,48 +1,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
 
-const port = 3001;
+const port = 3000;
 
 export default {
-  mode: 'production',
+  mode: 'development',
+  devtool: 'inline-source-map',
   entry: {
-    main: path.join(__dirname, 'src', 'Index.jsx'),
-  },
-
-  optimization: {
-    runtimeChunk: false, // <-- false, otherwise may break module federation
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        extractComments: false,
-      }),
-    ],
-    /** Don't split chunks otherwise may break module federation
-    splitChunks: {
-      chunks: 'all',
-      maxInitialRequests: Infinity,
-      minSize: 0,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            // get the name. E.g. node_modules/packageName/not/this/part.js
-            // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-            // npm package names are URL-safe, but some servers don't like @ symbols
-            return `${packageName.replace('@', '')}`;
-          },
-        },
-      },
-    },
-    */
+    main: path.join(__dirname, 'src', 'index.js'),
   },
 
   module: {
@@ -111,13 +80,12 @@ export default {
       },
     ],
   },
-
   /*
   output: {
     filename: '[name].js',
     path: path.join(__dirname, '__dist'),
   },
-  */
+*/
   output: {
     publicPath: `http://localhost:${port}/`,
   },
@@ -127,13 +95,11 @@ export default {
     client: {
       overlay: false,
     },
-    /** ---> Workaround CORS issue for host hot reload */
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3030',
+      },
     },
-    /** <--- Workaround CORS issue for host hot reload */
   },
 
   /**
@@ -153,10 +119,14 @@ export default {
       hash: true,
     }),
     new ModuleFederationPlugin({
-      name: 'plugin_catalog',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './Catalog': './src/Index.jsx',
+      name: 'host',
+      /* remotes: {
+        pluginCatalog: 'plugin_catalog@http://localhost:3001/remoteEntry.js',
+      },
+      */
+      shared: {
+        react: { singleton: true, requiredVersion: '^17.0.2' },
+        'react-dom': { singleton: true, requiredVersion: '^17.0.2' },
       },
     }),
   ],

@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./webpack.babel.js --progress",
-    "start": "webpack serve --config ./webpack.babel.js"
+    "build:dev": "webpack --config ./webpack.base.babel.js --progress",
+    "build:prod": "webpack --config ./webpack.prod.babel.js --progress",
+    "start:dev": "webpack serve --config ./webpack.base.babel.js",
+    "start:prod": "webpack serve --config ./webpack.prod.babel.js"
   },
   "dependencies": {
     "react": "^17.0.2",
@@ -54,6 +56,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^4.2.1",
+    "webpack-merge": "^5.8.0"
   }
 }

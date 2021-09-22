@@ -3,17 +3,19 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-const port = 3000;
+const port = 3030;
 
 const plugins = [];
-app.get("/plugins", (req, res) => {
-  const plugins = [];
-  fs.readdirSync(path.join(__dirname, "..", "shell", "__plugins")).forEach(
-    (file) => {
-      plugins.push(file);
-    }
-  );
-  res.send(plugins);
+app.get("/api/plugins", (req, res) => {
+  // May come from a database
+  const plugins = [
+    {
+      url: "//localhost:3001/pluginCatalogEntry.js",
+      scope: "plugin_catalog",
+      module: "./Catalog",
+    },
+  ];
+  res.send({ plugins });
 });
 
 app.listen(port, () => {
