@@ -153,10 +153,10 @@ export default {
       hash: true,
     }),
     new ModuleFederationPlugin({
-      name: 'plugin1',
+      name: 'plugin_catalog',
       filename: 'remoteEntry.js',
       exposes: {
-        './PluginOne': './src/Index.jsx',
+        './Catalog': './src/Index.jsx',
       },
     }),
   ],

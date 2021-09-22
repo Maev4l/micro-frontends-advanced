@@ -1,4 +1,4 @@
-import { mount } from 'pluginOne/PluginOne';
+import { mount } from 'pluginCatalog/Catalog';
 import React, { useRef, useEffect } from 'react';
 
 export default () => {

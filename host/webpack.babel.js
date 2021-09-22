@@ -11,7 +11,7 @@ const port = 3000;
 export default {
   mode: 'production',
   entry: {
-    main: path.join(__dirname, 'src', 'App.jsx'),
+    main: path.join(__dirname, 'src', 'index.js'),
   },
 
   optimization: {
@@ -145,7 +145,7 @@ export default {
     new ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        pluginOne: 'plugin1@http://localhost:3001/remoteEntry.js',
+        pluginCatalog: 'plugin_catalog@http://localhost:3001/remoteEntry.js',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^17.0.2' },

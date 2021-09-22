@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 const mount = (el) => {
-  render(<div>Plugin 1</div>, el);
+  render(<div>Catalog Module</div>, el);
 };
 
 /*

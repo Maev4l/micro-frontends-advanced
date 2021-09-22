@@ -1,2 +1,16 @@
-// Asynchronous loading here to workaround "eager" loading
-import('./bootstrap');
+import React, { lazy, Suspense } from 'react';
+
+const ExtensionOneLay = lazy(() => import('./ExtensionOne'));
+
+const App = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>
+        <div>Host</div>
+        <ExtensionOneLay />
+      </div>
+    </Suspense>
+  );
+};
+
+export default App;
