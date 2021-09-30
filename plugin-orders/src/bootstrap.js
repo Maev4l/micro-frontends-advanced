@@ -2,6 +2,16 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import Orders from './Orders';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
-render(<Orders />, document.getElementById('plugin-orders-root'));
+import Routes from './Orders';
+
+render(
+  <BrowserRouter>
+    <Route exact path="/">
+      <Redirect to="/orders" />
+    </Route>
+    <Routes />
+  </BrowserRouter>,
+  document.getElementById('plugin-orders-root'),
+);
