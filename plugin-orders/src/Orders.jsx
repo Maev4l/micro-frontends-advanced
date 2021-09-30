@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 const Orders = () => (
   <div>
-    <p>Orders Module</p>
-    <NavLink to="/">Back</NavLink>
+    <NavLink to="/">Back To Home</NavLink>
+    <br />
+    <h1>Orders Module</h1>
   </div>
 );
 
