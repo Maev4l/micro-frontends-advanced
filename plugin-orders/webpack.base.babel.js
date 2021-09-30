@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-const port = 3000;
+const port = 3002;
 
 export default {
   mode: 'development',
@@ -80,12 +80,13 @@ export default {
       },
     ],
   },
+
   /*
   output: {
     filename: '[name].js',
     path: path.join(__dirname, '__dist'),
   },
-*/
+  */
   output: {
     publicPath: `http://localhost:${port}/`,
   },
@@ -95,11 +96,13 @@ export default {
     client: {
       overlay: false,
     },
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3030',
-      },
+    /** ---> Workaround CORS issue for host hot reload */
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
+    /** <--- Workaround CORS issue for host hot reload */
   },
 
   /**
@@ -119,11 +122,12 @@ export default {
       hash: true,
     }),
     new ModuleFederationPlugin({
-      name: 'host',
-      /* remotes: {
-        pluginCatalog: 'plugin_catalog@http://localhost:3001/remoteEntry.js',
+      name: 'plugin_orders',
+      filename: 'pluginOrdersEntry.js',
+      exposes: {
+        './Routes': './src/Routes.jsx',
+        './contributions': './src/contributions.js',
       },
-      */
       shared: {
         react: { singleton: true, requiredVersion: '^17.0.2' },
         'react-dom': { singleton: true, requiredVersion: '^17.0.2' },

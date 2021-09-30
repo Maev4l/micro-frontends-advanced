@@ -1,0 +1,12 @@
+[
+  {
+    "url": "//localhost:3001/pluginCatalogEntry.js",
+    "scope": "plugin_catalog",
+    "module": "./contributions"
+  },
+  {
+    "url": "//localhost:3002/pluginOrdersEntry.js",
+    "scope": "plugin_orders",
+    "module": "./contributions"
+  }
+]

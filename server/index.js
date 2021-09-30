@@ -8,13 +8,9 @@ const port = 3030;
 const plugins = [];
 app.get("/api/plugins", (req, res) => {
   // May come from a database
-  const plugins = [
-    {
-      url: "//localhost:3001/pluginCatalogEntry.js",
-      scope: "plugin_catalog",
-      module: "./Catalog",
-    },
-  ];
+  const plugins = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, "plugins.json"), "utf8")
+  );
   res.send({ plugins });
 });
 

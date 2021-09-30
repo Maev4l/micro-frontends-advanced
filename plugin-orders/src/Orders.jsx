@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Catalog = () => (
+const Orders = () => (
   <div>
-    <p>Catalog Module</p>
+    <p>Orders Module</p>
     <NavLink to="/">Back</NavLink>
   </div>
 );
 
-export default Catalog;
+export default Orders;

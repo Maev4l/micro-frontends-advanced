@@ -1,6 +1,5 @@
 module.exports = {
   extends: ['airbnb', 'prettier'],
-  parser: 'babel-eslint',
   env: {
     browser: true,
   },
@@ -10,7 +9,5 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/label-has-for': 'off',
     'react/prop-types': 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'no-console': 'off',
   },
 };
