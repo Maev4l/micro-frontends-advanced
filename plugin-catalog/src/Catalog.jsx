@@ -26,7 +26,7 @@ const Catalog = () => (
       {products.map((p) => {
         const { id, name } = p;
         return (
-          <li>
+          <li key={id}>
             <NavLink to={`/catalog/product/${id}`}>{name}</NavLink>
           </li>
         );

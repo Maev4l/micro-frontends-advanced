@@ -1,9 +1,7 @@
-import { combineReducers } from 'redux';
+import mainReducers from './app/duck';
 
-import mainReducers from './shell/duck';
-
-const rootReducer = combineReducers({
+const hostReducers = {
   main: mainReducers,
-});
+};
 
-export default rootReducer;
+export default hostReducers;

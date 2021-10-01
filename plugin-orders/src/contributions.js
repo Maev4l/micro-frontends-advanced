@@ -10,8 +10,8 @@ const contributions = [
   },
   {
     contributionId: 'routing',
+    baseRoute: '/orders',
     module: './Routes',
-    route: '/orders',
   },
 ];
 export default contributions;

@@ -3,7 +3,8 @@ import clsx from 'clsx';
 import { Drawer, ListItem, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
+import { getContributions } from '../utils/contributions-manager';
 
 const sideBarWidth = 240;
 
@@ -26,24 +27,16 @@ const SideBar = () => {
   const { drawer, drawerPaper, toolbar, drawerContainer } = useStyles();
   const { pathname } = useLocation();
 
-  const sideBarItems = useSelector((store) => {
-    const {
-      main: { contributions },
-    } = store;
-
-    const sideBarContributions = [];
-    contributions.forEach((c) => {
-      const { contributionId } = c;
-      if (contributionId === 'side-bar') {
-        const { items } = c;
-        sideBarContributions.push(...items);
-      }
-    });
-    return sideBarContributions.sort((a, b) => {
-      const { label: label1 } = a;
-      const { label: label2 } = b;
-      return label1.localeCompare(label2);
-    });
+  const contributions = getContributions('side-bar');
+  let sideBarEntries = [];
+  contributions.forEach((c) => {
+    const { items } = c;
+    sideBarEntries = [...sideBarEntries, ...items];
+  });
+  sideBarEntries.sort((a, b) => {
+    const { label: label1 } = a;
+    const { label: label2 } = b;
+    return label1.localeCompare(label2);
   });
 
   return (
@@ -58,7 +51,7 @@ const SideBar = () => {
         <ListItem button selected={pathname === '/'} component={Link} to="/">
           <ListItemText>Home</ListItemText>
         </ListItem>
-        {sideBarItems.map((i) => {
+        {sideBarEntries.map((i) => {
           const { label, route } = i;
           return (
             <ListItem

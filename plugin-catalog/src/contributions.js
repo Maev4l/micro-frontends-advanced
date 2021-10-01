@@ -10,8 +10,13 @@ const contributions = [
   },
   {
     contributionId: 'routing',
+    baseRoute: '/catalog',
     module: './Routes',
-    route: '/catalog',
+  },
+  {
+    contributionId: 'store',
+    storeKey: 'catalog',
+    module: './Reducers',
   },
 ];
 export default contributions;

@@ -1,19 +1,10 @@
 import React, { lazy, Suspense } from 'react';
-import { useSelector } from 'react-redux';
+import { getContributions } from '../utils/contributions-manager';
 
 import { loadModule } from '../utils/module';
 
 const ExtensionPoint = ({ id }) => {
-  const contribution = useSelector((store) => {
-    const {
-      main: { contributions },
-    } = store;
-
-    return contributions.find((c) => {
-      const { contributionId } = c;
-      return contributionId === id;
-    });
-  });
+  const [contribution] = getContributions(id);
 
   if (!contribution) {
     return null;

@@ -125,8 +125,9 @@ export default {
       name: 'plugin_catalog',
       filename: 'pluginCatalogEntry.js',
       exposes: {
-        './Routes': './src/Routes.jsx',
         './contributions': './src/contributions.js',
+        './Routes': './src/Routes',
+        './Reducers': './src/reducers',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^17.0.2' },
@@ -136,7 +137,6 @@ export default {
         'redux-logger': { singleton: true, requiredVersion: '^3.0.6' },
         '@material-ui/core': { singleton: true, requiredVersion: '^4.12.3' },
         '@material-ui/lab': { singleton: true, requiredVersion: '^4.0.0-alpha.60' },
-        clsx: { singleton: true, requiredVersion: '^1.1.1' },
         'react-router-dom': { singleton: true, requiredVersion: '^5.3.0' },
         'redux-thunk': { singleton: true, requiredVersion: '^2.3.0' },
       },
