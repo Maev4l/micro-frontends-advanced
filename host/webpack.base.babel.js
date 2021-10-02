@@ -120,10 +120,6 @@ export default {
     }),
     new ModuleFederationPlugin({
       name: 'host',
-      /* remotes: {
-        pluginCatalog: 'plugin_catalog@http://localhost:3001/remoteEntry.js',
-      },
-      */
       shared: {
         react: { singleton: true, requiredVersion: '^17.0.2' },
         'react-dom': { singleton: true, requiredVersion: '^17.0.2' },
