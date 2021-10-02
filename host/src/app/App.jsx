@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 
 import Layout from './Layout';
 import Home from '../home/Home';
@@ -72,19 +73,11 @@ const App = () => {
 
   const { status } = state;
   if (status === 'loading') {
-    return (
-      <div>
-        <h1>Loading ...</h1>
-      </div>
-    );
+    return <Typography variant="h3">Loading ...</Typography>;
   }
 
   if (status === 'error') {
-    return (
-      <div>
-        <h1>Failed to load plugins.</h1>
-      </div>
-    );
+    return <Typography variant="h3">Failed to load plugins.</Typography>;
   }
 
   return (
