@@ -51,18 +51,22 @@ const App = () => {
           return plugins;
         })
         .then(async (plugins) => {
+          // TODO: improve here, load all contribution, before changing state
           // eslint-disable-next-line no-restricted-syntax
-          for (const p of plugins) {
+          for (let i = 0; i < plugins.length; i += 1) {
+            const p = plugins[i];
             const { scope, module } = p;
             // eslint-disable-next-line no-await-in-loop
             const res = await loadModule(scope, module);
             res().then((data) => {
               const { default: d } = data;
               addContributions(d.map((contribution) => ({ ...contribution, scope })));
-              setState({
-                ...state,
-                status: 'success',
-              });
+              if (i === plugins.length - 1) {
+                setState({
+                  ...state,
+                  status: 'success',
+                });
+              }
             });
           }
         });
