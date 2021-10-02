@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { loadModule } from '../utils/module';
 import { getContributions } from '../utils/contributions-manager';
 import Layout from '../app/Layout';
+import Loading from '../utils/Loading';
 
 const RoutingExtensionPoint = () => {
   const nestedRoutes = getContributions('routing');
@@ -16,7 +17,7 @@ const RoutingExtensionPoint = () => {
         return (
           <Route key={baseRoute} path={baseRoute}>
             <Layout>
-              <Suspense fallback="Loading...">
+              <Suspense fallback={<Loading />}>
                 <Component />
               </Suspense>
             </Layout>

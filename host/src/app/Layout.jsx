@@ -4,6 +4,8 @@ import { CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SideBar from './SideBar';
+import Header from './Header';
+import Loading from '../utils/Loading';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -25,11 +27,12 @@ const Layout = ({ children }) => {
   return (
     <div className={flex}>
       <CssBaseline />
+      <Header />
       <SideBar />
 
       <main className={clsx(content, p2)}>
         <div className={toolbar} />
-        <Suspense fallback={<div>Loading ...</div>}>
+        <Suspense fallback={<Loading />}>
           <div>{children}</div>
         </Suspense>
       </main>

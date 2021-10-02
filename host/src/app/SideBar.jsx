@@ -1,12 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Drawer, ListItem, ListItemText } from '@material-ui/core';
+import { Drawer, ListItem, ListItemText, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useLocation } from 'react-router-dom';
 
 import { getContributions } from '../utils/contributions-manager';
 
-const sideBarWidth = 240;
+export const sideBarWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -47,6 +47,7 @@ const SideBar = () => {
         paper: drawerPaper,
       }}
     >
+      <Toolbar />
       <div className={clsx(toolbar, drawerContainer)}>
         <ListItem button selected={pathname === '/'} component={Link} to="/">
           <ListItemText>Home</ListItemText>
