@@ -8,5 +8,10 @@
     "url": "//localhost:3002/pluginOrdersEntry.js",
     "scope": "plugin_orders",
     "module": "./contributions"
+  },
+  {
+    "url": "//localhost:3003/pluginUserEntry.js",
+    "scope": "plugin_user",
+    "module": "./contributions"
   }
 ]

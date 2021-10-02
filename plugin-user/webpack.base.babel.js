@@ -1,11 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-const port = 3000;
+const port = 3003;
 
 export default {
   mode: 'development',
@@ -80,12 +79,13 @@ export default {
       },
     ],
   },
+
   /*
   output: {
     filename: '[name].js',
     path: path.join(__dirname, '__dist'),
   },
-*/
+  */
   output: {
     publicPath: `http://localhost:${port}/`,
   },
@@ -95,11 +95,13 @@ export default {
     client: {
       overlay: false,
     },
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3030',
-      },
+    /** ---> Workaround CORS issue for host hot reload */
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
+    /** <--- Workaround CORS issue for host hot reload */
   },
 
   /**
@@ -112,29 +114,20 @@ export default {
 
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src', 'index.html'),
-      filename: 'index.html',
-      inject: 'body',
-      hash: true,
-    }),
     new ModuleFederationPlugin({
-      name: 'host',
-      /* remotes: {
-        pluginCatalog: 'plugin_catalog@http://localhost:3001/remoteEntry.js',
+      name: 'plugin_user',
+      filename: 'pluginUserEntry.js',
+      exposes: {
+        './User': './src/UserMenu.jsx',
+        './Routes': './src/Routes.jsx',
+        './contributions': './src/contributions.js',
       },
-      */
       shared: {
         react: { singleton: true, requiredVersion: '^17.0.2' },
         'react-dom': { singleton: true, requiredVersion: '^17.0.2' },
-        'react-redux': { singleton: true, requiredVersion: '^7.2.5' },
-        redux: { singleton: true, requiredVersion: '^4.1.1' },
-        'redux-logger': { singleton: true, requiredVersion: '^3.0.6' },
         '@material-ui/core': { singleton: true, requiredVersion: '^4.12.3' },
         '@material-ui/lab': { singleton: true, requiredVersion: '^4.0.0-alpha.60' },
-        clsx: { singleton: true, requiredVersion: '^1.1.1' },
         'react-router-dom': { singleton: true, requiredVersion: '^5.3.0' },
-        'redux-thunk': { singleton: true, requiredVersion: '^2.3.0' },
         '@material-ui/icons': { singleton: true, requiredVersion: '^4.11.2' },
       },
     }),
