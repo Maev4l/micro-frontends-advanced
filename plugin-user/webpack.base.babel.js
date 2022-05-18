@@ -3,6 +3,14 @@ import path from 'path';
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { dependencies } from './package.json';
+
+// Grab the dependencies declared in package.json, and put them
+// as shared dependencies for Webpack Module Federation (DRY approach)
+const shared = {};
+Object.keys(dependencies).forEach((key) => {
+  shared[key] = { singleton: true, requiredVersion: dependencies[key] };
+});
 
 const port = 3003;
 
@@ -122,14 +130,7 @@ export default {
         './Routes': './src/Routes.jsx',
         './contributions': './src/contributions.js',
       },
-      shared: {
-        react: { singleton: true, requiredVersion: '^17.0.2' },
-        'react-dom': { singleton: true, requiredVersion: '^17.0.2' },
-        '@material-ui/core': { singleton: true, requiredVersion: '^4.12.3' },
-        '@material-ui/lab': { singleton: true, requiredVersion: '^4.0.0-alpha.60' },
-        'react-router-dom': { singleton: true, requiredVersion: '^5.3.0' },
-        '@material-ui/icons': { singleton: true, requiredVersion: '^4.11.2' },
-      },
+      shared,
     }),
   ],
 };
