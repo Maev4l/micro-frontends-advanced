@@ -4,6 +4,14 @@ import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { dependencies } from './package.json';
+
+// Grab the dependencies declared in package.json, and put them
+// as shared dependencies for Webpack Module Federation (DRY approach)
+const shared = {};
+Object.keys(dependencies).forEach((key) => {
+  shared[key] = { singleton: true, requiredVersion: dependencies[key] };
+});
 
 const port = 3001;
 
@@ -129,17 +137,7 @@ export default {
         './Routes': './src/Routes',
         './Reducers': './src/reducers',
       },
-      shared: {
-        react: { singleton: true, requiredVersion: '^17.0.2' },
-        'react-dom': { singleton: true, requiredVersion: '^17.0.2' },
-        'react-redux': { singleton: true, requiredVersion: '^7.2.5' },
-        redux: { singleton: true, requiredVersion: '^4.1.1' },
-        'redux-logger': { singleton: true, requiredVersion: '^3.0.6' },
-        '@material-ui/core': { singleton: true, requiredVersion: '^4.12.3' },
-        '@material-ui/lab': { singleton: true, requiredVersion: '^4.0.0-alpha.60' },
-        'react-router-dom': { singleton: true, requiredVersion: '^5.3.0' },
-        'redux-thunk': { singleton: true, requiredVersion: '^2.3.0' },
-      },
+      shared,
     }),
   ],
 };
